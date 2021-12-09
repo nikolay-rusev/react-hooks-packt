@@ -1,6 +1,6 @@
 import React from "react";
-import Post from "./post/Post";
+import CreatePost from "./post/CreatePost";
 
 export default function App() {
-  return <Post title="React Hooks" content="The greatest thing since sliced bread!" author="Nikolay Rusev" />
+  return <CreatePost />
 }
