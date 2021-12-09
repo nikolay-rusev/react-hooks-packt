@@ -5,14 +5,12 @@ import Post from "./Post";
 function PostList({ posts = [] }) {
     return (
         <div>
-            {
-                posts.map((p, i) => {
-                    <React.Fragment key={"post-" + i}>
-                        <Post {...p} />
-                        <hr />
-                    </React.Fragment>
-                })
-            }
+            {posts.map((p, i) => (
+                <React.Fragment key={'post-' + i}>
+                    <Post {...p} />
+                    <hr />
+                </React.Fragment>
+            ))}
         </div>
     )
 }
