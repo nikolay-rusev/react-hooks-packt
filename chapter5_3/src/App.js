@@ -6,7 +6,7 @@ import appReducer from "./reducers";
 import Header from "./Header";
 import ChangeTheme from "./ChangeTheme";
 import { blogTitle } from "./appConfig";
-import { ThemeContext } from "./contexts";
+import { ThemeContext, StateContext } from "./contexts";
 
 const defaultPosts = [
   {
@@ -32,7 +32,7 @@ export default function App() {
     posts: defaultPosts,
   });
 
-  const { user, posts } = state;
+  const { user } = state;
 
   useEffect(() => {
     if (user) {
@@ -43,18 +43,20 @@ export default function App() {
   }, [user]);
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <div style={{ padding: 8 }}>
-        <Header text={blogTitle} />
-        <ChangeTheme theme={theme} setTheme={setTheme} />
-        <br />
-        <UserBar user={user} dispatch={dispatch} />
-        <br />
-        {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
-        <br />
-        <hr />
-        <PostList posts={posts} />
-      </div>
-    </ThemeContext.Provider>
+    <StateContext.Provider value={{ state, dispatch }}>
+      <ThemeContext.Provider value={theme}>
+        <div style={{ padding: 8 }}>
+          <Header text={blogTitle} />
+          <ChangeTheme theme={theme} setTheme={setTheme} />
+          <br />
+          <UserBar />
+          <br />
+          {user && <CreatePost />}
+          <br />
+          <hr />
+          <PostList />
+        </div>
+      </ThemeContext.Provider>
+    </StateContext.Provider>
   );
 }

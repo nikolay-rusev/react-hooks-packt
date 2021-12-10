@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../contexts";
 
-function CreatePost({ user, dispatch }) {
+export default function CreatePost() {
+  const { state, dispatch } = useContext(StateContext);
+  const { user } = state;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -42,10 +44,3 @@ function CreatePost({ user, dispatch }) {
     </form>
   );
 }
-
-CreatePost.propTypes = {
-  user: PropTypes.string,
-  dispatch: PropTypes.func,
-};
-
-export default CreatePost;

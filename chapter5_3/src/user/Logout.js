@@ -1,7 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import { StateContext } from "../contexts";
 
-function Logout({ user, dispatch }) {
+export default function Logout() {
+  const { state, dispatch } = useContext(StateContext);
+  const { user } = state;
   return (
     <form
       onSubmit={(e) => {
@@ -14,10 +16,3 @@ function Logout({ user, dispatch }) {
     </form>
   );
 }
-
-Logout.propTypes = {
-  user: PropTypes.string,
-  dispatch: PropTypes.func,
-};
-
-export default Logout;

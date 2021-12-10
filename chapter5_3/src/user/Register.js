@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../contexts";
 
-function Register({ dispatch }) {
+export default function Register() {
+  const { dispatch } = useContext(StateContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
@@ -61,9 +62,3 @@ function Register({ dispatch }) {
     </form>
   );
 }
-
-Register.propTypes = {
-  dispatch: PropTypes.func,
-};
-
-export default Register;
