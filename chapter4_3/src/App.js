@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import PostList from "./post/PostList";
 import CreatePost from "./post/CreatePost";
 import UserBar from "./user/UserBar";
@@ -24,6 +24,14 @@ export default function App() {
   });
 
   const { user, posts } = state;
+
+  useEffect(() => {
+    if (user) {
+      document.title = `${user} - React Hooks Blog`;
+    } else {
+      document.title = "React Hooks Blog";
+    }
+  }, [user]);
 
   return (
     <div style={{ padding: 8 }}>
