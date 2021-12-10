@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function Register({ setUser }) {
+function Register({ dispatch }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
@@ -22,7 +22,7 @@ function Register({ setUser }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setUser(username);
+        dispatch({ type: "REGISTER", username });
       }}
     >
       <label htmlFor="register-username">Username:</label>
@@ -63,7 +63,7 @@ function Register({ setUser }) {
 }
 
 Register.propTypes = {
-  setUser: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default Register;

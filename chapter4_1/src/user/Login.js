@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function Login({ setUser }) {
+function Login({ dispatch }) {
   const [username, setUsername] = useState("");
 
   function handleUsername(evt) {
@@ -12,7 +12,7 @@ function Login({ setUser }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setUser(username);
+        dispatch({ type: "LOGIN", username });
       }}
     >
       <label htmlFor="login-username">Username:</label>
@@ -31,7 +31,7 @@ function Login({ setUser }) {
 }
 
 Login.propTypes = {
-  setUser: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default Login;
