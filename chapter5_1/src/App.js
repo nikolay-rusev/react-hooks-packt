@@ -1,9 +1,10 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import PostList from "./post/PostList";
 import CreatePost from "./post/CreatePost";
 import UserBar from "./user/UserBar";
 import appReducer from "./reducers";
 import Header from "./Header";
+import ChangeTheme from "./ChangeTheme";
 import { blogTitle } from "./appConfig";
 import { ThemeContext } from "./contexts";
 
@@ -21,6 +22,11 @@ const defaultPosts = [
 ];
 
 export default function App() {
+  const [theme, setTheme] = useState({
+    primaryColor: "deepskyblue",
+    secondaryColor: "coral",
+  });
+
   const [state, dispatch] = useReducer(appReducer, {
     user: "",
     posts: defaultPosts,
@@ -37,11 +43,11 @@ export default function App() {
   }, [user]);
 
   return (
-    <ThemeContext.Provider
-      value={{ primaryColor: "deepskyblue", secondaryColor: "coral" }}
-    >
+    <ThemeContext.Provider value={theme}>
       <div style={{ padding: 8 }}>
         <Header text={blogTitle} />
+        <ChangeTheme theme={theme} setTheme={setTheme} />
+        <br />
         <UserBar user={user} dispatch={dispatch} />
         <br />
         {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
