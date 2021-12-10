@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function CreatePost({ user, posts, setPosts }) {
+function CreatePost({ user, dispatch }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -14,8 +14,7 @@ function CreatePost({ user, posts, setPosts }) {
   }
 
   function handleCreate() {
-    const newPost = { title, content, author: user };
-    setPosts([newPost, ...posts]);
+    dispatch({ type: "CREATE_POST", title, content, author: user });
   }
 
   return (
@@ -46,8 +45,7 @@ function CreatePost({ user, posts, setPosts }) {
 
 CreatePost.propTypes = {
   user: PropTypes.string,
-  posts: PropTypes.array,
-  setPosts: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default CreatePost;
