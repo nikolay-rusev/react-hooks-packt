@@ -5,6 +5,7 @@ import UserBar from "./user/UserBar";
 import appReducer from "./reducers";
 import Header from "./Header";
 import { blogTitle } from "./appConfig";
+import { ThemeContext } from "./contexts";
 
 const defaultPosts = [
   {
@@ -36,14 +37,18 @@ export default function App() {
   }, [user]);
 
   return (
-    <div style={{ padding: 8 }}>
-      <Header text={blogTitle} />
-      <UserBar user={user} dispatch={dispatch} />
-      <br />
-      {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
-      <br />
-      <hr />
-      <PostList posts={posts} />
-    </div>
+    <ThemeContext.Provider
+      value={{ primaryColor: "deepskyblue", secondaryColor: "coral" }}
+    >
+      <div style={{ padding: 8 }}>
+        <Header text={blogTitle} />
+        <UserBar user={user} dispatch={dispatch} />
+        <br />
+        {user && <CreatePost user={user} posts={posts} dispatch={dispatch} />}
+        <br />
+        <hr />
+        <PostList posts={posts} />
+      </div>
+    </ThemeContext.Provider>
   );
 }
