@@ -7,6 +7,7 @@ import Header from "./Header";
 import ChangeTheme from "./ChangeTheme";
 import { blogTitle } from "./appConfig";
 import { ThemeContext, StateContext } from "./contexts";
+import { useResource } from "react-request-hook";
 
 export default function App() {
   const [theme, setTheme] = useState({
@@ -14,18 +15,25 @@ export default function App() {
     secondaryColor: "coral",
   });
 
+  const [posts, getPosts] = useResource(() => ({
+    url: "/posts",
+    method: "get",
+  }));
+
   const [state, dispatch] = useReducer(appReducer, {
     user: "",
     posts: [],
   });
 
   const { user } = state;
-  
+
+  useEffect(getPosts, []);
+
   useEffect(() => {
-    fetch("/api/posts")
-      .then((result) => result.json())
-      .then((posts) => dispatch({ type: "FETCH_POSTS", posts }));
-  }, []);
+    if (posts && posts.data) {
+      dispatch({ type: "FETCH_POSTS", posts: posts.data });
+    }
+  }, [posts]);
 
   useEffect(() => {
     if (user) {
