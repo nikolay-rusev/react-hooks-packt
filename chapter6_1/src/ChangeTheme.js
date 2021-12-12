@@ -1,16 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
-const THEMES = [
-  {
-    primaryColor: "deepskyblue",
-    secondaryColor: "coral",
-  },
-  {
-    primaryColor: "orchid",
-    secondaryColor: "mediumseagreen",
-  },
-];
 
 function ThemeItem({ theme, active, onClick }) {
   return (
@@ -22,7 +11,8 @@ function ThemeItem({ theme, active, onClick }) {
         fontWeight: active ? "bold" : "normal",
       }}
     >
-      <span style={{ color: theme.primaryColor }}>Primary</span> / <span style={{ color: theme.secondaryColor }}>Secondary</span>
+      <span style={{ color: theme.primaryColor }}>Primary</span> /{" "}
+      <span style={{ color: theme.secondaryColor }}>Secondary</span>
     </span>
   );
 }
@@ -34,6 +24,14 @@ ThemeItem.propTypes = {
 };
 
 function ChangeTheme({ theme, setTheme }) {
+  const [themes, setThemes] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/themes")
+      .then((result) => result.json())
+      .then((themes) => setThemes(themes));
+  }, []);
+
   function isActive(t) {
     return (
       t.primaryColor === theme.primaryColor &&
@@ -44,7 +42,7 @@ function ChangeTheme({ theme, setTheme }) {
   return (
     <div>
       Change theme:
-      {THEMES.map((t, i) => (
+      {themes.map((t, i) => (
         <ThemeItem
           key={"theme-" + i}
           theme={t}
