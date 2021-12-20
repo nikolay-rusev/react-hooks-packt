@@ -23,15 +23,19 @@ export default function App() {
   const [state, dispatch] = useReducer(appReducer, {
     user: "",
     posts: [],
+    error: "",
   });
 
-  const { user } = state;
+  const { user, error } = state;
 
   useEffect(getPosts, []);
 
   useEffect(() => {
+    if (posts && posts.error) {
+      dispatch({ type: "POST_ERROR" });
+    }
     if (posts && posts.data) {
-      dispatch({ type: "FETCH_POSTS", posts: posts.data });
+      dispatch({ type: "FETCH_POSTS", posts: posts.data.reverse() });
     }
   }, [posts]);
 
@@ -55,6 +59,7 @@ export default function App() {
           {user && <CreatePost />}
           <br />
           <hr />
+          {error && <b>{error}</b>}
           <PostList />
         </div>
       </ThemeContext.Provider>
